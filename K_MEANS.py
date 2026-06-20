@@ -17,7 +17,7 @@
 # # =========================================================================
 # # 步驟一：提取 10 個 LOT 的觀測值統計波動特徵
 # # =========================================================================
-# print("🔹 [Step 1] 正在提取各 LOT 之觀測值波動特徵 (均值、標準差、變異數、IQR)...")
+# print("[Step 1] 正在提取各 LOT 之觀測值波動特徵 (均值、標準差、變異數、IQR)...")
 # lot_stats = df.groupby('LOT')['OBSERVATION'].agg([
 #     ('Mean', 'mean'),
 #     ('Std', 'std'),
@@ -32,14 +32,14 @@
 # # =========================================================================
 # # 步驟二：執行 K-Means 聚類 (分為 3 群)
 # # =========================================================================
-# print("🔹 [Step 2] 正在執行 K-Means 非監督式分群 (K=3)...")
+# print("[Step 2] 正在執行 K-Means 非監督式分群 (K=3)...")
 # kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
 # lot_stats['Cluster'] = kmeans.fit_predict(X_scaled)
 
 # # =========================================================================
 # # 步驟三：反向溯源 - 分析各群體為什麼相似？(找出他們共同愛用的機台)
 # # =========================================================================
-# print("🔹 [Step 3] 正在反向溯源各群體之「機台派工覆蓋率」...")
+# print("[Step 3] 正在反向溯源各群體之「機台派工覆蓋率」...")
 
 # # 抓出所有的機台欄位
 # machine_cols = [col for col in df.columns if col.startswith('T')]
@@ -278,7 +278,7 @@ cluster_mapping = {f"Cluster {c}": lot_stats[lot_stats['Cluster'] == c]['LOT'].t
 
 # --- 步驟二：Super LOT 審判 ---
 machine_cols = [col for col in df.columns if col.startswith('T')]
-hdic_methods = ["HDAIC", "HDHQ", "HDBIC"] # ✅ 這裡已經為您補上 HDHQ
+hdic_methods = ["HDAIC", "HDHQ", "HDBIC"] #  這裡已經為您補上 HDHQ
 
 for cluster_name, lots in cluster_mapping.items():
     print(f"\n\n{'*'*25} 【 Super LOT 審判目標：{cluster_name} 】 {'*'*25}")

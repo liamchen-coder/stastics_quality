@@ -40,7 +40,7 @@
 #     valid_machine_names = np.array(machine_cols)[valid_cols_idx]
     
 #     if len(valid_cols_idx) == 0:
-#         print("  ⚠️ 該群體內機台特徵無變異(皆為 0 或皆為 1)，無法執行 Two-Hit。")
+#         print(" 該群體內機台特徵無變異(皆為 0 或皆為 1)，無法執行 Two-Hit。")
 #         continue
 
 #     # ==========================================================
