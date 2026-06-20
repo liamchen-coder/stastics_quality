@@ -42,10 +42,10 @@ output_df = df[output_cols]
 output_path = r"C:\Users\user\Downloads\reduced_wafer_data_ridge_adjusted.csv"
 output_df.to_csv(output_path, index=False)
 
-print(f"💾 機器調整殘差結果已成功「另外」導出至新檔案：\n👉 {output_path}")
+print(f" 機器調整殘差結果已成功「另外」導出至新檔案：\n {output_path}")
 print("="*60)
 
 # 8. 終端機最終結果預覽
-print("\n🎯 【最終產出 Machine-adjusted 數據結果預覽 (前 15 筆)】:")
+print("\n 【最終產出 Machine-adjusted 數據結果預覽 (前 15 筆)】:")
 print(output_df.head(15).to_string(index=False))
 print("="*60)

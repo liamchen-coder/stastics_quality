@@ -172,8 +172,8 @@ if len(se_compatible_indices) > 0:
 else:
     alpha_1se = alpha_min
 
-print(f"🎯 最小誤差 Alpha (alpha_min) : {alpha_min:.5f}")
-print(f"🎯 一倍標準誤 Alpha (alpha_1se) : {alpha_1se:.5f} (懲罰力道更嚴格、模型更精簡)")
+print(f"最小誤差 Alpha (alpha_min) : {alpha_min:.5f}")
+print(f"一倍標準誤 Alpha (alpha_1se) : {alpha_1se:.5f} (懲罰力道更嚴格、模型更精簡)")
 
 # ==========================================
 # 3. 使用 1-se 準則的 Alpha 重新配適 Lasso 模型
@@ -185,7 +185,7 @@ lasso_1se.fit(X, y)
 coefs_1se = pd.Series(lasso_1se.coef_, index=t_cols)
 selected_machines_1se = coefs_1se[coefs_1se != 0].sort_values(key=abs, ascending=False)
 
-print(f"💡 透過 1-se 準則篩選出的關鍵核心機台數量: {len(selected_machines_1se)}")
+print(f"透過 1-se 準則篩選出的關鍵核心機台數量: {len(selected_machines_1se)}")
 if len(selected_machines_1se) > 0:
     print("\n【1-se 準則核心機台與影響 Beta 係數】")
     for name, coef in selected_machines_1se.items():
@@ -194,7 +194,7 @@ else:
     print(" 提示：1-se 準則太過嚴苛將所有變數歸零，改為列出單變量殘差相關性最高的前 3 個嫌疑機台：")
     corrs = X.corrwith(pd.Series(y)).abs().sort_values(ascending=False)
     for name, val in corrs.head(3).items():
-        print(f"  🎯 嫌疑機台 {name}: 相關係數絕對值 = {val:.4f}")
+        print(f" 嫌疑機台 {name}: 相關係數絕對值 = {val:.4f}")
 
 # ==========================================
 # 4. 繪製並安全儲存兩張論文標準圖表

@@ -5,7 +5,6 @@
 # import warnings
 # warnings.filterwarnings('ignore')
 
-# # 1. 讀取最原始的降維特徵資料集
 # data_path = r"C:\Users\user\Downloads\reduced_wafer_data.csv"
 # df = pd.read_csv(data_path)
 
@@ -45,7 +44,7 @@
 #         continue
 
 #     # ==========================================================
-#     # 🎯 Hit 1: 均值模型 (Location Model) - 尋找導致觀測值平均數偏移的機台
+#     # Hit 1: 均值模型 (Location Model) - 尋找導致觀測值平均數偏移的機台
 #     # ==========================================================
 #     # 使用 LassoCV 自動尋找最佳懲罰力度 (5折交叉驗證)
 #     lasso_mean = LassoCV(cv=5, random_state=42, max_iter=10000)
@@ -62,7 +61,7 @@
 #             hit1_machines.append((valid_machine_names[i], coef))
             
 #     # ==========================================================
-#     # 🎯 Hit 2: 變異數模型 (Dispersion Model) - 尋找導致變異數(殘差)放大的機台
+#     # Hit 2: 變異數模型 (Dispersion Model) - 尋找導致變異數(殘差)放大的機台
 #     # ==========================================================
 #     # 計算對數平方殘差 log(e^2 + epsilon) 作為變異數目標值
 #     # 加上微小值 1e-6 避免 log(0) 錯誤
@@ -78,7 +77,7 @@
 #             hit2_machines.append((valid_machine_names[i], coef))
 
 #     # ==========================================================
-#     # 📊 印出該 Cluster 的 Two-Hit 審判結果
+#     # 印出該 Cluster 的 Two-Hit 審判結果
 #     # ==========================================================
 #     print("\n   [Hit 1 均值模型] 影響該群基準線偏移的核心機台：")
 #     if not hit1_machines:

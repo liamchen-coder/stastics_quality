@@ -50,7 +50,7 @@
 # plt.savefig('lasso_alpha_trajectory.png', dpi=300)
 # plt.show()
 
-# print("📈 圖一已成功儲存至：lasso_alpha_trajectory.png")
+# print("圖一已成功儲存至：lasso_alpha_trajectory.png")
 
 # # ==========================================
 # # 圖二：核心機台廠內晶圓覆蓋率（優化網格線最終版）
@@ -96,7 +96,7 @@
 # plt.savefig('machine_wafer_coverage.png', dpi=300)
 # plt.show()
 
-# print("📊 圖二已成功更新並儲存至：machine_wafer_coverage.png")
+# print("圖二已成功更新並儲存至：machine_wafer_coverage.png")
 
 import numpy as np
 import pandas as pd
@@ -170,4 +170,4 @@ output_fig_path = 'lot_machine_distribution_ordered.png'
 plt.savefig(output_fig_path, dpi=300)
 plt.show()
 
-print(f"📈 排序+整數刻度版各 LOT 分佈長條圖已成功繪製並儲存至：{output_fig_path}")
+print(f"排序+整數刻度版各 LOT 分佈長條圖已成功繪製並儲存至：{output_fig_path}")

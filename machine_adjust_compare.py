@@ -20,7 +20,7 @@ print("="*90)
 # 開始對 Ridge, PCA, SVR 的殘差結果進行迴圈並行分析
 for model_name, file_path in file_dict.items():
     if not os.path.exists(file_path):
-        print(f"❌ 找不到 {model_name} 的檔案，請確認路徑：{file_path}")
+        print(f" 找不到 {model_name} 的檔案，請確認路徑：{file_path}")
         continue
         
     print(f"\n{'*'*25} 【 軸線方案：{model_name} Machine-adjusted Residual 】 {'*'*25}\n")
@@ -29,7 +29,7 @@ for model_name, file_path in file_dict.items():
     df = pd.read_csv(file_path)
     
     # =========================================================================
-    # 🤖 4.2.5 Isolation Forest (孤立森林異常檢測 - 尋找影響最多之 LOT)
+    #  4.2.5 Isolation Forest (孤立森林異常檢測 - 尋找影響最多之 LOT)
     # =========================================================================
     print(f" [4.2.5 Isolation Forest] 正在利用二元樹隨機切分空間，計算晶圓個體之異常得分...")
     
@@ -55,7 +55,7 @@ for model_name, file_path in file_dict.items():
     print("-"*80)
     
     # =========================================================================
-    # 🎯 4.2.6 Welch's ANOVA + Games-Howell (統計顯著性審判)
+    # 4.2.6 Welch's ANOVA + Games-Howell (統計顯著性審判)
     # =========================================================================
     print(f" [4.2.6 假設檢定] 正在執行 Welch's ANOVA (對抗異質變異數與小樣本)...")
     
@@ -94,7 +94,7 @@ for model_name, file_path in file_dict.items():
             print("  ->  雖然整體顯著，但兩兩比較未達 Games-Howell 保守臨界值門檻。")
             
         # =========================================================================
-        # 💾 輸出完整分析成果至 Downloads 資料夾
+        # 輸出完整分析成果至 Downloads 資料夾
         # =========================================================================
         output_path_if = f"C:\\Users\\user\\Downloads\\{model_name}_isolation_forest_ranking.csv"
         lot_anomaly_ranking.to_csv(output_path_if, index=False)

@@ -220,13 +220,13 @@
 #         print("\n=== 開始進行三種高維度資訊準則 (HDIC) 的變數選取對比 ===")
         
 #         for criterion in criteria_list:
-#             print(f"\n🚀 正在執行大師級 Two-Hit 演算法 -> 【 準則類型: {criterion} 】...")
+#             print(f"\n 正在執行大師級 Two-Hit 演算法 -> 【 準則類型: {criterion} 】...")
             
 #             # 呼叫 Twohit 函數並傳入當前的準則
 #             results = Twohit(X_data, y_data, HDIC_Type=criterion)
             
 #             print("-"*60)
-#             print(f"📊 【準則 {criterion} 執行成果】")
+#             print(f"【準則 {criterion} 執行成果】")
 #             print("-"*60)
             
 #             # 1. 印出該準則下的均值模型結果
@@ -269,12 +269,12 @@ warnings.filterwarnings('ignore')
 # ==========================================
 # 1. 讀取資料與設定特定機台
 # ==========================================
-# ⚠️ 請替換成你電腦中實際的 CSV 檔案路徑
+# 請替換成你電腦中實際的 CSV 檔案路徑
 data_path = r"C:\Users\user\Downloads\reduced_wafer_data.csv"
 
 try:
     df = pd.read_csv(data_path)
-    print(f"✅ 成功讀取資料集，資料形狀為: {df.shape}")
+    print(f"成功讀取資料集，資料形狀為: {df.shape}")
     
     # 設定你要觀察的 3 台特定機台
     target_machines = ['T0447', 'T0872', 'T1202']
@@ -282,7 +282,7 @@ try:
     # 檢查這些機台是否都在資料集中
     missing_machines = [m for m in target_machines if m not in df.columns]
     if missing_machines:
-        print(f"⚠️ 警告：資料集中找不到以下機台欄位：{missing_machines}")
+        print(f"警告：資料集中找不到以下機台欄位：{missing_machines}")
     else:
         # ==========================================
         # 2. 資料分組與排序處理
@@ -355,9 +355,9 @@ try:
         # ==========================================
         output_image_path = r"C:\Users\user\Downloads\Specific_3_Machines_Distribution.png"
         plt.savefig(output_image_path, dpi=300)
-        print(f"✅ 高畫質圖表已成功繪製並儲存至：{output_image_path}")
+        print(f"高畫質圖表已成功繪製並儲存至：{output_image_path}")
         
         plt.show()
 
 except FileNotFoundError:
-    print(f"❌ 錯誤：找不到路徑下的資料檔案，請確認 {data_path} 是否正確。")
+    print(f"錯誤：找不到路徑下的資料檔案，請確認 {data_path} 是否正確。")

@@ -68,4 +68,4 @@ output_fig_path = 'rf_feature_importance.png'
 plt.savefig(output_fig_path, dpi=300)
 plt.show()
 
-print(f"📈 隨機森林特徵重要性長條圖已成功繪製並儲存至：{output_fig_path}")
+print(f"隨機森林特徵重要性長條圖已成功繪製並儲存至：{output_fig_path}")

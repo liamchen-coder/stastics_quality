@@ -27,7 +27,7 @@ X_pca = pca.fit_transform(X)
 n_components_chosen = X_pca.shape[1]
 cumulative_variance = np.sum(pca.explained_variance_ratio_) * 100
 
-print(f"✅ PCA 空間轉換完成！")
+print(f"PCA 空間轉換完成！")
 print(f"-> 自動提取之主成分個數 (k): {n_components_chosen} 個")
 print(f"-> 提煉出之主成分對派工網路的累積解釋變異量: {cumulative_variance:.2f}%")
 print("-"*60)
@@ -54,10 +54,10 @@ output_df = df[output_cols]
 output_path = r"C:\Users\user\Downloads\reduced_wafer_data_pca_adjusted.csv"
 output_df.to_csv(output_path, index=False)
 
-print(f"💾 PCA 機器調整殘差結果已成功「另外」導出至新檔案：\n👉 {output_path}")
+print(f"PCA 機器調整殘差結果已成功「另外」導出至新檔案：\n👉 {output_path}")
 print("="*60)
 
 # 9. 終端機最終結果預覽
-print("\n🎯 【最終產出 PCA Machine-adjusted 數據結果預覽 (前 15 筆)】:")
+print("\n 【最終產出 PCA Machine-adjusted 數據結果預覽 (前 15 筆)】:")
 print(output_df.head(15).to_string(index=False))
 print("="*60)

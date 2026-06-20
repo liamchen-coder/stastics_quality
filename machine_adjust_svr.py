@@ -32,7 +32,7 @@ grid_search = GridSearchCV(svr_base, tuned_parameters, cv=5, scoring='neg_mean_s
 grid_search.fit(X, y)
 
 best_svr = grid_search.best_estimator_
-print(f"✅ SVR 參數優化完成！")
+print(f" SVR 參數優化完成！")
 print(f"-> 最佳懲罰係數 (C): {grid_search.best_params_['C']}")
 print(f"-> 最佳不敏感邊帶寬度 (Epsilon): {grid_search.best_params_['epsilon']}")
 print(f"-> 全機台模型之總體變異解釋率 R2 Score: {best_svr.score(X, y):.4f}")
@@ -53,10 +53,10 @@ output_df = df[output_cols]
 output_path = r"C:\Users\user\Downloads\reduced_wafer_data_svr_adjusted.csv"
 output_df.to_csv(output_path, index=False)
 
-print(f"💾 SVR 機器調整殘差結果已成功「另外」導出至新檔案：\n👉 {output_path}")
+print(f" SVR 機器調整殘差結果已成功「另外」導出至新檔案：\n {output_path}")
 print("="*60)
 
 # 8. 終端機最終結果預覽
-print("\n🎯 【最終產出 SVR Machine-adjusted 數據結果預覽 (前 15 筆)】:")
+print("\n 【最終產出 SVR Machine-adjusted 數據結果預覽 (前 15 筆)】:")
 print(output_df.head(15).to_string(index=False))
 print("="*60)

@@ -12,7 +12,7 @@ data_path = r"C:\Users\user\Downloads\reduced_wafer_data.csv"
 df = pd.read_csv(data_path)
 
 print("="*90)
-print("🚀 啟動終極審判單元：5.1 變異數來源全域拆解 (LOT 還是 MACHINE)")
+print(" 啟動終極審判單元：5.1 變異數來源全域拆解 (LOT 還是 MACHINE)")
 print("="*90)
 
 # 2. 數據預處理：將 831 維的機台特徵欄位，進行工程路徑編碼
@@ -22,18 +22,18 @@ df['MACHINE_ROUTE'] = df[machine_cols].astype(str).agg('-'.join, axis=1)
 # 將長字串轉為類別型代碼 (例如 Route_1, Route_2...) 以利統計建模
 df['MACHINE_ROUTE'] = 'Route_' + df['MACHINE_ROUTE'].astype('category').cat.codes.astype(str)
 
-print(f"📊 資料結構現況 -> 總晶圓數: {df.shape[0]} 片 | 批次群組(LOT)數: {df['LOT'].nunique()} 個 | 設備組合(MACHINE)數: {df['MACHINE_ROUTE'].nunique()} 組")
+print(f" 資料結構現況 -> 總晶圓數: {df.shape[0]} 片 | 批次群組(LOT)數: {df['LOT'].nunique()} 個 | 設備組合(MACHINE)數: {df['MACHINE_ROUTE'].nunique()} 組")
 print("-"*90)
 
 # =========================================================================
 # 5.1.1 隨機效應模型 (Random Effects Model) - REML 變異數成分分解
 # =========================================================================
-print("🔹 [5.1.1 隨機效應模型] 正在透過受限最大概似估計(REML)進行製程總變異拆解...")
+print(" [5.1.1 隨機效應模型] 正在透過受限最大概似估計(REML)進行製程總變異拆解...")
 
 # 建立雙向混合/隨機效應模型公式
 model_reml = smf.mixedlm("OBSERVATION ~ 1", df, groups=df['LOT'])
 
-# 💡 修正處：直接呼叫 .fit() 即可，statsmodels 預設就是使用 REML 估計法
+#  修正處：直接呼叫 .fit() 即可，statsmodels 預設就是使用 REML 估計法
 result_reml = model_reml.fit()
 
 # 針對高維設備路徑組合，獨立計算其變異數貢獻 (透過二因子組間平方和變異精確估計)
@@ -61,7 +61,7 @@ pct_lot = (var_comp_lot / var_comp_total) * 100
 pct_mach = (var_comp_mach / var_comp_total) * 100
 pct_err = (var_comp_err / var_comp_total) * 100
 
-print("\n📊 【隨機效應模型：全域變異數成分分解量化報告】:")
+print("\n 【隨機效應模型：全域變異數成分分解量化報告】:")
 reml_report = pd.DataFrame({
     "變異數來源 (Source)": ["生產批次效應 (LOT Variance)", "機台派工效應 (MACHINE Variance)", "隨機未知噪聲 (Residual Error)"],
     "變異數估計值 (Variance)": [var_comp_lot, var_comp_mach, var_comp_err],
@@ -71,13 +71,13 @@ print(reml_report.to_string(index=False))
 
 # 判定首要戰犯
 winner_511 = "LOT (原料/環境)" if pct_lot > pct_mach else "MACHINE (設備機差)"
-print(f"\n👉 5.1.1 參數模型定罪結論: 製程總波動之首要核心變異源為 【 {winner_511} 】")
+print(f"\n 5.1.1 參數模型定罪結論: 製程總波動之首要核心變異源為 【 {winner_511} 】")
 print("-"*90)
 
 # =========================================================================
 # 5.1.2 無母數變異分解 (基於 Ranks 的方差分析)
 # =========================================================================
-print("🔹 [5.1.2 無母數變異分解] 正在將觀測值轉換為全域排名(Ranks)進行非參數審判...")
+print(" [5.1.2 無母數變異分解] 正在將觀測值轉換為全域排名(Ranks)進行非參數審判...")
 
 # 將原始觀測值轉為排名 Rank
 df['OBSERVATION_RANK'] = stats.rankdata(df['OBSERVATION'])
@@ -100,7 +100,7 @@ pct_lot_rank = (ss_lot_rank / ss_total_rank) * 100
 pct_mach_rank = (ss_mach_rank / ss_total_rank) * 100
 pct_err_rank = (100 - pct_lot_rank - pct_mach_rank) if (100 - pct_lot_rank - pct_mach_rank) > 0 else 0
 
-print("\n📊 【排名空間 (Rank Space) 總體平方和無母數分解報告】:")
+print("\n 【排名空間 (Rank Space) 總體平方和無母數分解報告】:")
 rank_report = pd.DataFrame({
     "變異數來源 (Source)": ["生產批次效應 (LOT Rank SS)", "機台派工效應 (MACHINE Rank SS)", "隨機未知噪聲 (Residual Rank SS)"],
     "Kruskal-Wallis 統計量": [kw_lot.statistic, kw_mach.statistic, np.nan],
@@ -110,11 +110,11 @@ rank_report = pd.DataFrame({
 print(rank_report.to_string(index=False))
 
 winner_512 = "LOT (原料/環境)" if pct_lot_rank > pct_mach_rank else "MACHINE (設備機差)"
-print(f"\n👉 5.1.2 非參數模型定罪結論: 在不考慮常態分佈下，排名空間主導者依然為 【 {winner_512} 】")
+print(f"\n 5.1.2 非參數模型定罪結論: 在不考慮常態分佈下，排名空間主導者依然為 【 {winner_512} 】")
 print("-"*90)
 
 # =========================================================================
-# 💾 輸出完整分析成果至 Downloads 資料夾
+#  輸出完整分析成果至 Downloads 資料夾
 # =========================================================================
 output_path_reml = r"C:\Users\user\Downloads\section_511_random_effects_report.csv"
 output_path_rank = r"C:\Users\user\Downloads\section_512_non_parametric_report.csv"
@@ -122,9 +122,9 @@ output_path_rank = r"C:\Users\user\Downloads\section_512_non_parametric_report.c
 reml_report.to_csv(output_path_reml, index=False)
 rank_report.to_csv(output_path_rank, index=False)
 
-print("💾 最終終極變異數拆解數據報告已成功導出：")
+print(" 最終終極變異數拆解數據報告已成功導出：")
 print(f"  1. 隨機效應最大概似估計報告 -> {output_path_reml}")
 print(f"  2. 基於 Ranks 之無母數方差分解 -> {output_path_rank}")
 print("="*90)
-print("🎉 第 5.1 節全域變異大會師運算完畢！請查收終端機數據與 CSV 成果。")
+print(" 第 5.1 節全域變異大會師運算完畢！請查收終端機數據與 CSV 成果。")
 print("="*90)

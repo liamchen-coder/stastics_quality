@@ -91,7 +91,7 @@
 # # 自動將圖片存到您的下載資料夾中
 # output_image_path = r"C:\Users\user\Downloads\New_Machine_Distribution.png"
 # plt.savefig(output_image_path, dpi=300)
-# print(f"✅ 圖表繪製完成！已高畫質儲存至：{output_image_path}")
+# print(f"圖表繪製完成！已高畫質儲存至：{output_image_path}")
 
 # plt.show()
 
@@ -193,6 +193,6 @@ plt.tight_layout()
 # 自動將圖片存到您的下載資料夾中
 output_image_path = r"C:\Users\user\Downloads\RF_Top5_Wafer_Distribution.png"
 plt.savefig(output_image_path, dpi=300)
-print(f"✅ 圖表繪製完成！已高畫質儲存至：{output_image_path}")
+print(f"圖表繪製完成！已高畫質儲存至：{output_image_path}")
 
 plt.show()

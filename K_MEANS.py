@@ -123,7 +123,7 @@
 #     silhouette_scores.append(silhouette_score(X_scaled, labels))
 
 # # ==========================================
-# # 📊 6. 繪製證據圖表 (可直接貼入論文)
+# #  6. 繪製證據圖表 (可直接貼入論文)
 # # ==========================================
 # fig, ax1 = plt.subplots(figsize=(10, 5))
 
@@ -151,8 +151,8 @@
 # # 另存圖檔到下載資料夾
 # output_image_path = r"C:\Users\user\Downloads\K_Selection_Evidence.png"
 # plt.savefig(output_image_path, dpi=300)
-# print(f"🎯 根據嚴謹的數學指標評估，建議將這 10 個 LOT 分成 【 {best_k} 】 群！")
-# print(f"💾 K 值選擇證據圖表已導出至：{output_image_path}")
+# print(f" 根據嚴謹的數學指標評估，建議將這 10 個 LOT 分成 【 {best_k} 】 群！")
+# print(f" K 值選擇證據圖表已導出至：{output_image_path}")
 
 # plt.show()
 import os
@@ -166,7 +166,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # =========================================================================
-# ⚙️ 核心演算法：Ohit2011 (正交貪婪演算法 OGA) & True Two-Hit
+#  核心演算法：Ohit2011 (正交貪婪演算法 OGA) & True Two-Hit
 # =========================================================================
 def Ohit2011(X, y, Kn=None, c1=5, HDIC_Type="HDHQ", const2=np.arange(0.5, 2.5, 0.5), const3=np.arange(0.2, 1.2, 0.2)):
     n, p = X.shape
@@ -259,7 +259,7 @@ def True_Twohit(X, y, Kn=None, c1=5, HDIC_Type="HDHQ"):
     return {"Trim_reg": best_Trim_reg, "Trim_dis": best_Trim_dis, "Beta": best_Beta, "Alpha": best_Alpha}
 
 # =========================================================================
-# 🚀 主程式：K-Means 自動分群 -> 轉換為 Super LOT 進行局部審判
+# 主程式：K-Means 自動分群 -> 轉換為 Super LOT 進行局部審判
 # =========================================================================
 data_path = r"C:\Users\user\Downloads\reduced_wafer_data.csv"
 df = pd.read_csv(data_path)
@@ -282,16 +282,16 @@ hdic_methods = ["HDAIC", "HDHQ", "HDBIC"] # ✅ 這裡已經為您補上 HDHQ
 
 for cluster_name, lots in cluster_mapping.items():
     print(f"\n\n{'*'*25} 【 Super LOT 審判目標：{cluster_name} 】 {'*'*25}")
-    print(f" 📦 包含批次: {lots} (將合併視為單一巨大樣本池)")
+    print(f"  包含批次: {lots} (將合併視為單一巨大樣本池)")
     
     df_cluster = df[df['LOT'].isin(lots)].copy()
     X, y = df_cluster[machine_cols].to_numpy(), df_cluster['OBSERVATION'].to_numpy()
     
-    # 🔍 新增機制：抓出覆蓋率 > 95% 的「群體基底機台」
+    # 新增機制：抓出覆蓋率 > 95% 的「群體基底機台」
     coverage = X.mean(axis=0)
     signature_idx = np.where(coverage > 0.95)[0]
     if len(signature_idx) > 0:
-        print("\n  [🚨 第一階段：抓出該 Super LOT 絕對共用的基底機台]")
+        print("\n  [第一階段：抓出該 Super LOT 絕對共用的基底機台]")
         for idx in signature_idx:
             print(f"      - 機台: {machine_cols[idx]} | 覆蓋率: {coverage[idx]*100:.1f}% (該群體共同經歷的潛在污染源)")
 
@@ -302,15 +302,15 @@ for cluster_name, lots in cluster_mapping.items():
     X_valid = X[:, valid_cols_idx]
     machine_names = np.array(machine_cols)[valid_cols_idx]
 
-    print("\n  [🔬 第二階段：執行 Two-Hit 揪出群內作亂戰犯]")
+    print("\n  [ 第二階段：執行 Two-Hit 揪出群內作亂戰犯]")
     for method in hdic_methods:
         print(f"   -> 採用準則：{method}")
         res = True_Twohit(X_valid, y, HDIC_Type=method)
         
         # Location Model
         reg_str = ", ".join([f"{machine_names[i]} (Beta: {c:.4f})" for i, c in zip(res["Trim_reg"], res["Beta"][1:])])
-        print(f"      📍 均值模型 (均值漂移): {reg_str if reg_str else '(無)'}")
+        print(f"      均值模型 (均值漂移): {reg_str if reg_str else '(無)'}")
         
         # Dispersion Model
         dis_str = ", ".join([f"{machine_names[i]} (Alpha: {c:.4f})" for i, c in zip(res["Trim_dis"], res["Alpha"][1:])])
-        print(f"      📈 變異模型 (異質波動): {dis_str if dis_str else '(無)'}")
+        print(f"      變異模型 (異質波動): {dis_str if dis_str else '(無)'}")
